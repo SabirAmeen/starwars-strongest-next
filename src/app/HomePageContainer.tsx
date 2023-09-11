@@ -11,18 +11,8 @@ interface imageList {
 }
 
 export const getMatchImageList = async (): Promise<imageList> => {
-    return new Promise((resolve) => {
-        resolve({
-            firstImage: {
-                id: 1,
-                image: 'Adi_Gallia.webp',
-            },
-            secondImage: {
-                id: 2,
-                image: 'Adi_Gallia.webp',
-            }
-        })
-    })
+    const fetchResult = await fetch(`${process.env.WEBAPP_BASE_URL}/getMatchImages`, {cache: 'no-cache'});
+    return await fetchResult.json();
 }
 
 const HomePageContainer = async () => {
