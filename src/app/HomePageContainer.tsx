@@ -1,6 +1,16 @@
 import HomePage from './HomePage';
 
-export const getMatchImageList = async () => {
+type imageItem = {
+    id: number,
+    image: string
+}
+
+interface imageList {
+    firstImage: imageItem,
+    secondImage: imageItem,
+}
+
+export const getMatchImageList = async (): Promise<imageList> => {
     return new Promise((resolve) => {
         resolve({
             firstImage: {
