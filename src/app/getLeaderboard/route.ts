@@ -15,7 +15,7 @@ export async function GET(request: Request) {
           name,
           percentage: (row.hits/row.totalhits) * 100,
         })
-      }).sort((a,b) => b.percentage - a.percentage)
+      }).sort((a: any,b: any) => b.percentage - a.percentage)
     }
     return NextResponse.json({
       data: {

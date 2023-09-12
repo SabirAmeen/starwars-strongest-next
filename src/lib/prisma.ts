@@ -11,7 +11,9 @@ if (process.env.NODE_ENV === 'production') {
     },
   });
 } else {
+  // @ts-ignore
   if (!global.prisma) {
+    // @ts-ignore
     global.prisma = new PrismaClient({
       datasources: {
         db: {
@@ -20,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
       },
     });
   }
+  // @ts-ignore
   prisma = global.prisma;
 }
 
