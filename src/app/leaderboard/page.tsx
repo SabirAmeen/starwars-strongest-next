@@ -1,7 +1,8 @@
+import { getHostUrl } from '../../serverUtils/host';
 
 
 export const getLeaderboard = async () => {
-  const fetchResult = await fetch(`${process.env.WEBAPP_BASE_URL}/getLeaderboard`, {cache: 'no-cache'});
+  const fetchResult = await fetch(`${getHostUrl()}/getLeaderboard`, {cache: 'no-cache'});
   const fetchData = await fetchResult.json();
   return fetchData.data || {}
 }
