@@ -23,13 +23,14 @@ const HomePage = (props: HomeProps) => {
             winner: imageSelected,
             firstImageID,
             secondImgId
-            })
+            }),
+            cache: 'no-cache'
         })
         .then(res => res.json())
         .then((res) => {
             setImgState({
-                firstImg: res?.data?.firstImage || null,
-                secondImg: res?.data?.secondImage || null
+                firstImg: res?.firstImage || null,
+                secondImg: res?.secondImage || null
             })
         })
         .finally(() => {
@@ -42,7 +43,6 @@ const HomePage = (props: HomeProps) => {
     const firstImg = imgState.firstImg || firstImage;
     const secondImg = imgState.secondImg || secondImage;
     
-
     return (
         <div className='w-300 mx-auto h-full lg:h-auto'>
             <h2 className="text-center mb-10 text-3xl">Who is the strongest?</h2>
