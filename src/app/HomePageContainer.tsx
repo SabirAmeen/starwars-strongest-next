@@ -1,3 +1,4 @@
+import { getHostUrl } from '../serverUtils/host';
 import HomePage from './HomePage';
 
 type imageItem = {
@@ -11,7 +12,7 @@ interface imageList {
 }
 
 export const getMatchImageList = async (): Promise<imageList> => {
-    const fetchResult = await fetch(`${process.env.WEBAPP_BASE_URL}/getMatchImages`, {cache: 'no-cache'});
+    const fetchResult = await fetch(`${getHostUrl()}/getMatchImages`, {cache: 'no-cache'});
     return await fetchResult.json();
 }
 
