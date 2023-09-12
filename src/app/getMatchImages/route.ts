@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getMatchIds } from '../serverUtils/getMatchIds';
+import { getMatchIds } from '../../serverUtils/getMatchIds';
+
 
 import imageList from '../../../public/starwars.json';
 
