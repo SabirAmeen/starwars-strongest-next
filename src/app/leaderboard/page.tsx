@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import { getHostUrl } from '../../serverUtils/host';
 
 
-export const getLeaderboard = async () => {
+const getLeaderboard = async () => {
   const fetchResult = await fetch(`${getHostUrl()}/getLeaderboard`, {cache: 'no-cache'});
   const fetchData = await fetchResult.json();
   return fetchData.data || {}
@@ -15,8 +16,12 @@ const Leaderboard = async () => {
     return (
       <li className="flex justify-between items-center px-5 py-5">
         <div className="text-center max-w-[50%]">
-            <img src={`/images/${character.image}`} alt={character.name}
-                className="w-[100px] h-[100px] lg:w-40 lg:h-40 object-cover object-top my-5"
+            <Image
+              className="w-[100px] h-[100px] lg:w-40 lg:h-40 object-cover object-top my-5"
+              alt={character.name}
+              width={100}
+              height={100}
+              src={`/images/${character.image}`}
             />
             <span className="text-lg">{character.name}</span>
         </div>
