@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import router from 'next/navigation';
 import Matcher from './components/Matcher';
 import Loader from './components/Loader';
 
@@ -32,6 +33,7 @@ const HomePage = (props: HomeProps) => {
                 firstImg: res?.firstImage || null,
                 secondImg: res?.secondImage || null
             })
+            router.refresh();
         })
         .finally(() => {
             setLoading(false);
