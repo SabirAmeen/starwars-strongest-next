@@ -12,7 +12,8 @@ interface imageList {
 }
 
 export const getMatchImageList = async (): Promise<imageList> => {
-    const fetchResult = await fetch(`${getHostUrl()}/getMatchImages`, {cache: 'no-cache'});
+    const fetchResult = await fetch(`${getHostUrl()}/getMatchImages`, {cache: 'no-store'});
+    console.log('fetchedMatches')
     return await fetchResult.json();
 }
 
