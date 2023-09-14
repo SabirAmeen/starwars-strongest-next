@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache'
 import { getMatchIds } from "../../serverUtils/getMatchIds";
 import imageList from "../../../public/starwars.json";
 import prisma from '../../lib/prisma';
@@ -37,13 +38,13 @@ export async function POST(request: Request) {
     await prisma.$transaction([upCreateWinner, upCreateLoser])
     const firstId = getMatchIds();
     const secondId = getMatchIds(firstId);
+    revalidateTag('leaderboard')
     return NextResponse.json({
       firstImage: imageList.find((image) => image.id === firstId),
       secondImage: imageList.find((image) => image.id === secondId),
     })
   }
   catch(e) {
-    console.log(e)
     return NextResponse.json({
       error: 'something went wrong',
     })
