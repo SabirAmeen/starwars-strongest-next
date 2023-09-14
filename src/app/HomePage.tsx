@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import router from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import Matcher from './components/Matcher';
 import Loader from './components/Loader';
 
@@ -10,6 +10,7 @@ interface HomeProps {
 }
 
 const HomePage = (props: HomeProps) => {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [imgState, setImgState] = useState({ firstImg: null, secondImg: null });
 
