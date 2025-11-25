@@ -22,16 +22,16 @@ WORKDIR /app
 ENV NODE_ENV production
 
 # Create a non-root user for security
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nextjs && \
+    adduser --system --uid 1001 --ingroup nextjs nextjs
 
 # Copy the standalone output from the builder stage.
 # This includes the server.js file, and all necessary node_modules.
-COPY --from=builder /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nextjs /app/.next/standalone ./
 
 # Copy the public and static folders
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nextjs /app/public ./public
+COPY --from=builder --chown=nextjs:nextjs /app/.next/static ./.next/static
 
 # The standalone output includes the prisma schema, so we don't need to copy it manually
 # but we need to ensure the prisma client files are there.
