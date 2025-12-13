@@ -34,21 +34,13 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-          cp -r public ${{ env.STANDALONE_BUILD_PATH }}/public
-          STANDALONE_NEXT_PATH="${{ env.STANDALONE_BUILD_PATH }}/.next"
-          mkdir -p $STANDALONE_NEXT_PATH
-
-          # Copy the BUILD_ID file
-          cp .next/BUILD_ID $STANDALONE_NEXT_PATH/BUILD_ID
-          
-          # Copy the static assets folder
-          cp -r .next/static $STANDALONE_NEXT_PATH/static
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: ${{ env.STANDALONE_BUILD_PATH }}
+          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
