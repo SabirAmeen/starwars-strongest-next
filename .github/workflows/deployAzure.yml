@@ -9,6 +9,12 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  # ✅ Access the environment-specific secret
+  DATABASE_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+  WEBAPP_BASE_URL: http://localhost:3000
+  STANDALONE_BUILD_PATH: '.next/standalone'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,11 +34,6 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-        env:
-          # ✅ Access the environment-specific secret
-          DATABASE_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          WEBAPP_BASE_URL: http://localhost:3000
-          STANDALONE_BUILD_PATH: '.next/standalone'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
