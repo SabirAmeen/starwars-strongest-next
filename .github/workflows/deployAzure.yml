@@ -34,6 +34,10 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+          STANDALONE_PATH="${{ env.STANDALONE_BUILD_PATH }}"
+          STANDALONE_NEXT_PATH="$STANDALONE_PATH/.next"
+          cp -r .next/static $STANDALONE_NEXT_PATH/static
+          cp -r public $STANDALONE_PATH/public
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
