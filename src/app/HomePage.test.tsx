@@ -4,19 +4,25 @@ import HomePage from './HomePage';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock useRouter
-const mockPush = vi.fn();
+// Mock useRouter
 const mockRefresh = vi.fn();
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
-    push: mockPush,
     refresh: mockRefresh,
   }),
 }));
 
 // Mock Matcher component to avoid testing child implementation details
+interface MockMatcherProps {
+  onSelect: (selectedId: number, firstId: number, secondId: number) => void;
+  firstImage: { id: number; name: string };
+  secondImage: { id: number; name: string };
+  disableBtn: boolean;
+}
+
 vi.mock('./components/Matcher', () => ({
-  default: ({ onSelect, firstImage, secondImage, disableBtn }: any) => (
+  default: ({ onSelect, firstImage, secondImage, disableBtn }: MockMatcherProps) => (
     <div data-testid="matcher">
       <div data-testid="first-image">{firstImage?.name}</div>
       <div data-testid="second-image">{secondImage?.name}</div>
@@ -105,7 +111,8 @@ describe('HomePage', () => {
     });
   });
 
-  it('hides loader even if API fails', async () => {
+  it('hides loader and logs error if API fails', async () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     (global.fetch as any).mockRejectedValue(new Error('API Error'));
 
     render(<HomePage {...mockProps} />);
@@ -117,5 +124,8 @@ describe('HomePage', () => {
     await waitFor(() => {
        expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     });
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Error updating character:', new Error('API Error'));
+    consoleErrorSpy.mockRestore();
   });
 });
