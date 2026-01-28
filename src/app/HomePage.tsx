@@ -36,6 +36,9 @@ const HomePage = (props: HomeProps) => {
             })
             router.refresh();
         })
+        .catch((err) => {
+            console.error('Error updating character:', err);
+        })
         .finally(() => {
             setLoading(false);
         })
