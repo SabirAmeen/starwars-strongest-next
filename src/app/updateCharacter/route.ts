@@ -1,13 +1,16 @@
-import { NextResponse } from 'next/server'
-import { revalidateTag } from 'next/cache';
+import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { getMatchIds } from "../../serverUtils/getMatchIds";
 import imageList from "../../../public/starwars.json";
-import prisma from '../../lib/prisma';
+import prisma from "../../lib/prisma";
 
 export async function POST(request: Request) {
   try {
     const requestBody = await request.json();
-    const loser = requestBody.firstImageID === requestBody.winner ? requestBody.secondImgId : requestBody.firstImageID;
+    const loser =
+      requestBody.firstImageID === requestBody.winner
+        ? requestBody.secondImgId
+        : requestBody.firstImageID;
     const upCreateWinner = prisma.vote_bank.upsert({
       where: {
         id: requestBody.winner,
@@ -20,7 +23,7 @@ export async function POST(request: Request) {
         id: requestBody.winner,
         hits: 1,
         totalhits: 1,
-      }
+      },
     });
     const upCreateLoser = prisma.vote_bank.upsert({
       where: {
@@ -33,20 +36,19 @@ export async function POST(request: Request) {
         id: loser,
         hits: 0,
         totalhits: 1,
-      }
-    })
-    await prisma.$transaction([upCreateWinner, upCreateLoser])
+      },
+    });
+    await prisma.$transaction([upCreateWinner, upCreateLoser]);
     const firstId = getMatchIds();
     const secondId = getMatchIds(firstId);
-    revalidateTag('leaderboard')
+    revalidateTag("leaderboard", {});
     return NextResponse.json({
       firstImage: imageList.find((image) => image.id === firstId),
       secondImage: imageList.find((image) => image.id === secondId),
-    })
-  }
-  catch(e) {
+    });
+  } catch (e) {
     return NextResponse.json({
-      error: 'something went wrong',
-    })
+      error: "something went wrong",
+    });
   }
 }

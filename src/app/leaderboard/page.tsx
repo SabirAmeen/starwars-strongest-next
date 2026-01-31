@@ -3,7 +3,7 @@ import { getHostUrl } from '../../serverUtils/host';
 
 
 const getLeaderboard = async () => {
-  const fetchResult = await fetch(`${getHostUrl()}/getLeaderboard`, { next: { tags: ['leaderboard'] } });
+  const fetchResult = await fetch(`${await getHostUrl()}/getLeaderboard`, { next: { tags: ['leaderboard'] } });
   const fetchData = await fetchResult.json();
   return fetchData.data || {}
 }

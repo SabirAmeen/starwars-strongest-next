@@ -4,7 +4,7 @@ import HomePageContainer, { getMatchImageList } from './HomePageContainer';
 
 // Mock getHostUrl
 vi.mock('../serverUtils/host', () => ({
-  getHostUrl: () => 'http://localhost:3000'
+  getHostUrl: async () => 'http://localhost:3000'
 }));
 
 // Mock HomePage component
