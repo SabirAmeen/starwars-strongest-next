@@ -25,7 +25,7 @@ export default function RootLayout({
           </section>
         </main>
         <footer className="fixed bottom-0 left-0 right-0 text-center bg-[var(--app-background)]">
-          Made with ♡ by <a href="https://github.com/SabirAmeen" target="_blank">Sabir Ameen</a>
+          Made with ♡ by <a href="https://github.com/SabirAmeen" target="_blank" rel="noreferrer">Sabir Ameen</a>
         </footer>
       </body>
     </html>
